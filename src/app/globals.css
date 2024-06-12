@@ -5,4 +5,7 @@
 
 body {
   background: linear-gradient(to right, #0B0B11, #24243e, #0B0B11);
+  color: white;
+  font-size: 25px;
+  font-family: 'Roboto', sans-serif;
 }
