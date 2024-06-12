@@ -12,11 +12,16 @@ import mimi from '/public/avatars/mimi.svg'
 import precious from '/public/avatars/precious.svg'
 import zoe from '/public/avatars/zoe.svg'
 
-const User = () => {
+interface UserInterface {
+  size: number;
+  className: string;
+}
+
+const User = ({ size, className }: UserInterface) => {
   return (
     <div className='relative'>
-      <Image className='w-16 bg-black rounded-full border-2 border-main-color' alt='avatar' src={angel} />
-      <FaPencil className='absolute bottom-0 right-1' size={25} />
+      <Image className={className} alt='avatar' src={angel} />
+      <FaPencil className='absolute bottom-0 right-1' size={size} />
     </div>
   );
 }
