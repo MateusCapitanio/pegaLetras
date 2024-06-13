@@ -9,7 +9,7 @@ export default function Home() {
   const router = useRouter();
 
   const handleRedirect = () => {
-    const logged = localStorage.getItem('userLogged')
+    const logged = localStorage?.getItem('userLogged')
     if (!logged) {
       console.log('Não logado!');
       return router.push('/login')

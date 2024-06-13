@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../app/globals.css";
 import User from '@/components/User';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import Avatars from '@/components/Avatars';
+import { useRouter } from 'next/router'
 
 const Login = () => {
   const [openAvatars, setOpenAvatars] = useState(false);
+  const [logged, setLogged] = useState(false);
+
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const logged = localStorage?.getItem('userLogged');
+
+    if (logged) {
+      router.push('/');
+      setLogged(true);
+      return;
+    }
+    
+  }, []);
 
   return (
-    <div className='flex justify-center items-center w-screen h-screen'>
+    !logged && (
+      <div className='flex justify-center items-center w-screen h-screen'>
       <div className='flex flex-col p-5 justify-evenly items-center bg-transparent backdrop-blur-lg border border-main-color shadow-lg shadow-main-color rounded-lg border-opacity-20 w-[350px] h-[500px]'>
         <div className='inline-block'>
           <button onClick={() => setOpenAvatars(!openAvatars)}>
@@ -21,8 +38,9 @@ const Login = () => {
         </label>
         <Button className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md disabled:bg-main-color-disabled disabled:opacity-50 hover:bg-main-color-hover' type='submit'>Entrar</Button>
       </div>
-      {openAvatars && <Avatars />}
+      {openAvatars && <Avatars setCloseModal={setOpenAvatars} />}
     </div>
+    )
   );
 }
 
