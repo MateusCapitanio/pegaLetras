@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation'
+import MainProfile from "@/components/MainProfile";
 
 export default function Home() {
   const [logged, setLogged] = useState(false)
@@ -10,11 +11,13 @@ export default function Home() {
 
   const handleRedirect = () => {
     const logged = localStorage?.getItem('userLogged')
+    const avatar = localStorage?.getItem('avatar')
     if (!logged) {
       console.log('Não logado!');
       return router.push('/login')
     }
-    return setLogged(true)
+    setLogged(true)
+    return router.push(`?avatar=${avatar}`);
   }
 
   useEffect(() => {
@@ -25,6 +28,7 @@ export default function Home() {
      logged && (
       <main>
         <Header />
+        <MainProfile />
       </main>
     )
   );

@@ -49,7 +49,7 @@ const Login = () => {
           <Button className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md disabled:bg-main-color-disabled disabled:opacity-50 disabled:cursor-not-allowed hover:bg-main-color-hover'       disabled={disabledLoginButton}
             type='submit'
             onClick={() => {
-              localStorage.setItem('userLogged', username);
+              localStorage.setItem('userLogged', JSON.stringify(username));
               router.push('/');
               setLogged(true);
             }}
