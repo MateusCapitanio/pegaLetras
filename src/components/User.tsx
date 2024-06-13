@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+'use client'
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion'
 
@@ -18,37 +19,45 @@ interface UserInterface {
   size: number;
   className: string;
   iconClassName: string;
+  renderPencil: boolean;
 }
 
-const User = ({ size, className, iconClassName }: UserInterface) => {
+const User = ({ size, className, iconClassName, renderPencil }: UserInterface) => {
+  const [userSelected, setUserSelected] = useState('');
   const searchParams = useSearchParams();
 
-  const handleGetImage: any = () => {
+  const handleGetImage: any = (userSelected: string) => {
     const selectedAvatar = searchParams?.get('avatar');
 
-    switch (selectedAvatar) {
-      case 'angel':
-        return angel;
-      case 'buster':
-        return buster;
-      case 'chester':
-        return chester;
-      case'mimi':
-        return mimi;
-      case 'precious':
-        return precious;
-      case 'zoe':
-        return zoe;
-      default:
-        return angel;
+    if ((selectedAvatar === 'angel') || (userSelected === 'angel')) {
+      return angel
+    } else if ((selectedAvatar === 'buster') || (userSelected === 'buster')) {
+      return buster
+    } else if ((selectedAvatar === 'chester') || (userSelected === 'chester')) {
+      return chester
+    } else if ((selectedAvatar === 'mimi') || (userSelected === 'mimi')) {
+      return mimi
+    } else if ((selectedAvatar === 'precious') || (userSelected === 'precious')) {
+      return precious
+    } else if ((selectedAvatar === 'zoe') || (userSelected === 'zoe')) {
+      return zoe
     }
+    return angel
   }
+
+  useEffect(() => {
+    const avatarStorage = JSON.parse(localStorage?.getItem('avatar')!)
+
+    if (avatarStorage) {
+      setUserSelected(avatarStorage)
+    }
+    
+  }, []);
 
   return (
     <div className='relative'>
-        <Image className={className} alt='avatar' src={handleGetImage()} />
-        <FaPencil className={iconClassName} size={size} />
-        {/* <button>teste</button> */}
+        <Image className={className} alt='avatar' src={handleGetImage(userSelected)} />
+        {renderPencil && <FaPencil className={iconClassName} size={size} />}
     </div>
   );
 }
