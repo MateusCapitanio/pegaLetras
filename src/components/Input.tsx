@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 
 interface inputProps {
   id: string
@@ -6,12 +6,13 @@ interface inputProps {
   className: string
   placeholder?: string
   maxLength?: number
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const Input = ({id, type, className, placeholder, maxLength}: inputProps) => {
+const Input = ({id, type, className, placeholder, maxLength, onChange}: inputProps) => {
   return (
     <div>
-      <input maxLength={maxLength} placeholder={placeholder} id={id} type={type} className={className} />
+      <input onChange={onChange} maxLength={maxLength} placeholder={placeholder} id={id} type={type} className={className} />
     </div>
   );
 }
