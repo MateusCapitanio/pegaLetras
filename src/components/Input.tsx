@@ -5,12 +5,13 @@ interface inputProps {
   type: string
   className: string
   placeholder?: string
+  maxLength?: number
 }
 
-const Input = ({id, type, className, placeholder}: inputProps) => {
+const Input = ({id, type, className, placeholder, maxLength}: inputProps) => {
   return (
     <div>
-      <input placeholder={placeholder} id={id} type={type} className={className} />
+      <input maxLength={maxLength} placeholder={placeholder} id={id} type={type} className={className} />
     </div>
   );
 }

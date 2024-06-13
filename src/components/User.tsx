@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion'
 
 // icons
 import { FaPencil } from "react-icons/fa6";
@@ -15,13 +16,28 @@ import zoe from '/public/avatars/zoe.svg'
 interface UserInterface {
   size: number;
   className: string;
+  iconClassName: string;
 }
 
-const User = ({ size, className }: UserInterface) => {
+const User = ({ size, className, iconClassName }: UserInterface) => {
+  const [openAvatars, setOpenAvatars] = useState(false);
+
   return (
     <div className='relative'>
-      <Image className={className} alt='avatar' src={angel} />
-      <FaPencil className='absolute bottom-0 right-1' size={size} />
+      {openAvatars && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
+          className='bg-red-500 w-[500px] h-[500px]'
+        >
+          teste
+        </motion.div>
+      )}
+        <Image className={className} alt='avatar' src={angel} />
+        <FaPencil className={iconClassName} size={size} />
+        {/* <button>teste</button> */}
     </div>
   );
 }

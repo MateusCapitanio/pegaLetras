@@ -6,7 +6,7 @@ const Header = () => {
     <header className='bg-[#0B0B11] bg-opacity-50 border-b border-white border-opacity-15 backdrop-blur-sm'>
       <ul className='flex items-center justify-between py-3 px-10'>
         <li><h1 className='text-3xl font-bold'>Pega Letras</h1></li>
-        <li><User className='w-16 bg-black rounded-full border-2 border-main-color' size={25} /></li>
+        <li><User iconClassName='absolute bottom-0 right-1' className='w-16 bg-black rounded-full border-2 border-main-color' size={25} /></li>
       </ul>
     </header>
   );
