@@ -20,21 +20,9 @@ interface UserInterface {
 }
 
 const User = ({ size, className, iconClassName }: UserInterface) => {
-  const [openAvatars, setOpenAvatars] = useState(false);
 
   return (
     <div className='relative'>
-      {openAvatars && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-          className='bg-red-500 w-[500px] h-[500px]'
-        >
-          teste
-        </motion.div>
-      )}
         <Image className={className} alt='avatar' src={angel} />
         <FaPencil className={iconClassName} size={size} />
         {/* <button>teste</button> */}

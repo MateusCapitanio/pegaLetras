@@ -1,17 +1,19 @@
-import React, { ReactNode } from 'react';
+import React, { MouseEventHandler, ReactNode } from 'react';
 
 interface buttonProps {
+  id?: string
   children: ReactNode
   className: string
   type: 'submit' | 'reset' | 'button'
-  onClick?: () => void
+  onClick?: MouseEventHandler<HTMLButtonElement>
   disabled?: boolean
+  value?: string
 }
 
-const Button = ({children, className, type, onClick, disabled}: buttonProps) => {
+const Button = ({id, children, className, type, onClick, disabled, value}: buttonProps) => {
   return (
     <div>
-      <button className={className} type={type} disabled={disabled} onClick={onClick}>{children}</button>
+      <button id={id} value={value} className={className} type={type} disabled={disabled} onClick={onClick}>{children}</button>
     </div>
   );
 }

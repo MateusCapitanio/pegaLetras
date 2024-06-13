@@ -9,7 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "main-color": "#5e4cf9"
+        "main-color": "#5e4cf9",
+        "main-color-hover": "#7062ed",
+        "main-color-disabled": "#473bba"
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
