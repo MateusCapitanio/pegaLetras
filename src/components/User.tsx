@@ -41,7 +41,7 @@ const User = ({ size, className, iconClassName, renderPencil }: UserInterface) =
       } else if ((selectedAvatar === 'precious')) {
         return precious
       } else if ((selectedAvatar === 'zoe')) {
-        return angel
+        return zoe
       }
       return angel
     } else if (userSelected) {

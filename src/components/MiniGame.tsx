@@ -24,8 +24,6 @@ const MiniGame = () => {
     if (letter) {
       console.log('ELEMENTO EXISTE')
       letter.classList.replace('bg-[#373547]', 'bg-main-color')
-      // letter.classList.add('bg-main-color')
-      // letter.classList.remove('bg-[#373547]')
     }
     setKey(e.key);
   }
