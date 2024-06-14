@@ -19,7 +19,11 @@ export default function Home() {
       return router.push('/login')
     }
     setLogged(true)
-    return router.push(`?avatar=${avatar}`);
+
+    if (window.location.pathname === '/') {
+      return router.push(`?avatar=${avatar}`);
+    }
+    return router.push(window.location.href)
   }
 
   useEffect(() => {

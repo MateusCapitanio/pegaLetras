@@ -4,16 +4,39 @@ import Avatars from './Avatars';
 import Button from './Button';
 import MiniGame from './MiniGame';
 import ModalRules from './ModalRules';
+import { useSearchParams, useRouter } from 'next/navigation'
+import Link from 'next/link';
 
 const MainProfile = () => {
   const [openAvatars, setOpenAvatars] = useState(false);
   const [openMiniGame, setOpenMiniGame] = useState(false);
   const [name, setName] = useState('');
   const [showRules, setShowRules] = useState(false)
+  const [totalPoints, setTotalPoints] = useState(0)
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleOpenMiniGame = () => {
+    const miniGameOpen = searchParams?.get('miniGameOpen')
+
+    console.log('minigame', miniGameOpen)
+
+    if (miniGameOpen) {
+      return setOpenMiniGame(true)
+    }
+  }
 
 
   useEffect(() => {
     const name = JSON.parse(localStorage?.getItem('userLogged')!)
+    const totalPoints = JSON.parse(localStorage?.getItem('totalPoints')!)
+
+    handleOpenMiniGame()
+
+    if (totalPoints) {
+      setTotalPoints(totalPoints);
+    }
     if (name) {
       return setName(name)
     }
@@ -30,10 +53,12 @@ const MainProfile = () => {
           <span className='font-bold'>{name}</span>
           <div className='flex flex-col items-center border border-main-color p-3 rounded-lg'>
             <h1>Maior pontuação</h1>
-            <span>0</span>
+            <span>{totalPoints}</span>
           </div>
-          <Button className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md hover:bg-main-color-hover' type='button'
-            onClick={() => setOpenMiniGame(true)}
+          <Button  className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md hover:bg-main-color-hover' type='button' onClick={() => {
+            router.push(`${window.location.href}&miniGameOpen=true`);
+            setOpenMiniGame(true)
+          }}
           >
             Iniciar Game
           </Button>
