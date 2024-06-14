@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion'
 
 // icons
 import { FaPencil } from "react-icons/fa6";
