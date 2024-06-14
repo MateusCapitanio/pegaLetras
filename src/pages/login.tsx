@@ -18,7 +18,7 @@ const Login = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const logged = localStorage?.getItem('userLogged');
+    const logged = JSON.parse(localStorage?.getItem('userLogged')!);
 
     if (logged) {
       router.push('/');

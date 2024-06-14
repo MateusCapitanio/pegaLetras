@@ -30,7 +30,6 @@ const User = ({ size, className, iconClassName, renderPencil }: UserInterface) =
     const selectedAvatar = searchParams?.get('avatar');
 
     if (selectedAvatar) {
-      console.log('ENTREI NO PARAMS');
       if ((selectedAvatar === 'angel')) {
         return angel
       } else if ((selectedAvatar === 'buster')) {

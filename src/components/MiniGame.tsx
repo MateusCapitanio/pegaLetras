@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useEffect, useState } from 'react';
+import React, { KeyboardEvent, MouseEvent, MouseEventHandler, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
 import Button from './Button';
 import { motion } from 'framer-motion'
@@ -15,13 +15,18 @@ const MiniGame = () => {
 
   const handleShuffleArray = () => {
     const shuffledArray = arrayLetters.sort(() => Math.random() - 0.5)
-
-    return shuffledArray.slice(0, 6);
+    const arraySixLetters = shuffledArray.slice(0, 6)
+    return arraySixLetters;
   }
 
   const handleGetKeydown: any = (e: KeyboardEvent) => {
     const letter = document.getElementById(e.key.toUpperCase());
-    // console.log('LETRA IGUAL?', letter === e.key);
+    if (letter) {
+      console.log('ELEMENTO EXISTE')
+      letter.classList.replace('bg-[#373547]', 'bg-main-color')
+      // letter.classList.add('bg-main-color')
+      // letter.classList.remove('bg-[#373547]')
+    }
     setKey(e.key);
   }
 
@@ -50,7 +55,7 @@ const MiniGame = () => {
       <div className='flex flex-col bg-[#0B0B11] bg-opacity-80 border border-main-color rounded-lg gap-5 py-5 px-10'>
         <ul className='grid grid-cols-3 sm:flex  gap-5'>
           {SelectedLetters.map((letter, i) => (
-            <Button id={letter.toLocaleUpperCase()} key={letter + i} className={`cursor-default ${mainColor ? mainColor : 'bg-[#625f7b]'} border-2 border-main-color p-5 ${mainColor === null ? 'opacity-50' : 'opacity-100'} rounded-lg`} type='button' >
+            <Button onClick={(e: React.MouseEvent<HTMLButtonElement>) => console.log(e.currentTarget.id)} id={letter.toLocaleUpperCase()} key={letter + i} className={`cursor-default bg-[#373547] border-2 border-main-color p-5 rounded-lg`} type='button' >
               <li onClick={() => setMainColor('bg-main-color')} >{letter.toUpperCase()}</li>
             </Button>
           ))}
