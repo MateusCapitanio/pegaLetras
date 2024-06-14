@@ -10,10 +10,12 @@ export default function Home() {
   const router = useRouter();
 
   const handleRedirect = () => {
-    const logged = localStorage?.getItem('userLogged')
-    const avatar = localStorage?.getItem('avatar')
+    const logged = JSON.parse(localStorage?.getItem('userLogged')!)
+    const avatar = JSON.parse(localStorage?.getItem('avatar')!)
     if (!logged) {
-      console.log('Não logado!');
+      if (avatar) {
+        return router.push(`/login?avatar=${avatar}`)
+      }      
       return router.push('/login')
     }
     setLogged(true)

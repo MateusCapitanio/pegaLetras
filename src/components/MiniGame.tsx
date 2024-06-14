@@ -1,32 +1,63 @@
-import React, { useEffect, useState } from 'react';
+import React, { KeyboardEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation'
+import Button from './Button';
+import { motion } from 'framer-motion'
 
 const MiniGame = () => {
   const [time, setTime] = useState(100);
+  const [SelectedLetters, setSelectedLetters] = useState<string[]>([]);
+  const [key, setKey] = useState('')
   const [mainColor, setMainColor] = useState<string | null>(null)
 
+  const router = useRouter();
+
+  const arrayLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+  const handleShuffleArray = () => {
+    const shuffledArray = arrayLetters.sort(() => Math.random() - 0.5)
+
+    return shuffledArray.slice(0, 6);
+  }
+
+  const handleGetKeydown: any = (e: KeyboardEvent) => {
+    const letter = document.getElementById(e.key.toUpperCase());
+    // console.log('LETRA IGUAL?', letter === e.key);
+    setKey(e.key);
+  }
+
   useEffect(() => {
+    setSelectedLetters(handleShuffleArray())
     const intervalTimeout = setInterval(() => {
       setTime(prevState => Math.max(prevState - 0.5, 0))
     }, 1000)
     if (time <= 0) {
       return () => clearInterval(intervalTimeout)
     }
+
+    window.addEventListener('keydown', handleGetKeydown)
+    return () => {
+      window.removeEventListener('keydown', handleGetKeydown);
+    };
   }, []);
 
   return (
-    <div className='absolute flex justify-center items-center w-screen h-screen bg-black bg-opacity-50 backdrop-blur-lg'>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.5 }}
+      className='absolute flex justify-center items-center w-screen h-screen bg-black bg-opacity-50 backdrop-blur-lg'>
       <div className='flex flex-col bg-[#0B0B11] bg-opacity-80 border border-main-color rounded-lg gap-5 py-5 px-10'>
         <ul className='grid grid-cols-3 sm:flex  gap-5'>
-          <li onClick={() => setMainColor('bg-main-color')} className={`${mainColor ? mainColor : 'bg-[#625f7b]'} border-2 border-main-color p-5 ${mainColor === null ? 'opacity-50' : 'opacity-100'} rounded-lg`}>A</li>
-          <li className={`${mainColor ? mainColor : 'bg-[#625f7b]'} border-2 border-main-color p-5 ${mainColor === null ? 'opacity-50' : 'opacity-100'} rounded-lg`}>B</li>
-          <li className={`${mainColor ? mainColor : 'bg-[#625f7b]'} border-2 border-main-color p-5 ${mainColor === null ? 'opacity-50' : 'opacity-100'} rounded-lg`}>C</li>
-          <li className={`${mainColor ? mainColor : 'bg-[#625f7b]'} border-2 border-main-color p-5 ${mainColor === null ? 'opacity-50' : 'opacity-100'} rounded-lg`}>D</li>
-          <li className={`${mainColor ? mainColor : 'bg-[#625f7b]'} border-2 border-main-color p-5 ${mainColor === null ? 'opacity-50' : 'opacity-100'} rounded-lg`}>E</li>
-          <li className={`${mainColor ? mainColor : 'bg-[#625f7b]'} border-2 border-main-color p-5 ${mainColor === null ? 'opacity-50' : 'opacity-100'} rounded-lg`}>F</li>
+          {SelectedLetters.map((letter, i) => (
+            <Button id={letter.toLocaleUpperCase()} key={letter + i} className={`cursor-default ${mainColor ? mainColor : 'bg-[#625f7b]'} border-2 border-main-color p-5 ${mainColor === null ? 'opacity-50' : 'opacity-100'} rounded-lg`} type='button' >
+              <li onClick={() => setMainColor('bg-main-color')} >{letter.toUpperCase()}</li>
+            </Button>
+          ))}
         </ul>
         <span style={{ width: `${time}%` }} className={`h-1 bg-main-color rounded-full transition-all duration-1000`}></span>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

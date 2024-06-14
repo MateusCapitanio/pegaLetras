@@ -29,18 +29,38 @@ const User = ({ size, className, iconClassName, renderPencil }: UserInterface) =
   const handleGetImage: any = (userSelected: string) => {
     const selectedAvatar = searchParams?.get('avatar');
 
-    if ((selectedAvatar === 'angel') || (userSelected === 'angel')) {
+    if (selectedAvatar) {
+      console.log('ENTREI NO PARAMS');
+      if ((selectedAvatar === 'angel')) {
+        return angel
+      } else if ((selectedAvatar === 'buster')) {
+        return buster
+      } else if ((selectedAvatar === 'chester')) {
+        return chester
+      } else if ((selectedAvatar === 'mimi')) {
+        return mimi
+      } else if ((selectedAvatar === 'precious')) {
+        return precious
+      } else if ((selectedAvatar === 'zoe')) {
+        return angel
+      }
       return angel
-    } else if ((selectedAvatar === 'buster') || (userSelected === 'buster')) {
-      return buster
-    } else if ((selectedAvatar === 'chester') || (userSelected === 'chester')) {
-      return chester
-    } else if ((selectedAvatar === 'mimi') || (userSelected === 'mimi')) {
-      return mimi
-    } else if ((selectedAvatar === 'precious') || (userSelected === 'precious')) {
-      return precious
-    } else if ((selectedAvatar === 'zoe') || (userSelected === 'zoe')) {
-      return zoe
+    } else if (userSelected) {
+      if ((userSelected === 'angel')) {
+        return angel
+      } else if ((userSelected === 'buster')) {
+        return buster
+      } else if ((userSelected === 'chester')) {
+        return chester
+      } else if ((userSelected === 'mimi')) {
+        return mimi
+      } else if ((userSelected === 'precious')) {
+        return precious
+      } else if ((userSelected === 'zoe')) {
+        console.log('CAIU AQUI STORAGE');
+        return zoe
+      }
+      return angel
     }
     return angel
   }
@@ -51,13 +71,13 @@ const User = ({ size, className, iconClassName, renderPencil }: UserInterface) =
     if (avatarStorage) {
       setUserSelected(avatarStorage)
     }
-    
+
   }, []);
 
   return (
     <div className='relative'>
-        <Image className={className} alt='avatar' src={handleGetImage(userSelected)} />
-        {renderPencil && <FaPencil className={iconClassName} size={size} />}
+      <Image className={className} alt='avatar' src={handleGetImage(userSelected)} />
+      {renderPencil && <FaPencil className={iconClassName} size={size} />}
     </div>
   );
 }
