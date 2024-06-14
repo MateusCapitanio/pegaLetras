@@ -1,4 +1,4 @@
-import React, { Dispatch, KeyboardEvent, MouseEvent, MouseEventHandler, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, KeyboardEvent, SetStateAction, useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation'
 import Button from './Button';
 import { motion } from 'framer-motion'
@@ -39,6 +39,7 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
 
   const handleGetKeydown: any = (e: KeyboardEvent) => {
     positionLetter += 1
+    console.log(positionLetter)
     const letter = document.getElementById(`${e.key.toUpperCase()}-${positionLetter}`);
     if (letter) {
       setTotalPoints(prevState => prevState + 10)
@@ -51,6 +52,7 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
         setSelectedLetters(handleShuffleArray())
       }
     } else {
+      positionLetter = 0
       setMistake('Ops... Você errou!')
       console.log('ERROU!')
     }
@@ -92,28 +94,37 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
         <h1 className='text-4xl font-bold text-center'>Pega-Letras</h1>
         <ul className='grid grid-cols-3 sm:flex  gap-5'>
           {SelectedLetters.map((letter, i) => (
-            <Button onClick={(e: React.MouseEvent<HTMLButtonElement>) => console.log(e.currentTarget.id)} id={`${letter.toLocaleUpperCase()}-${i + 1}`} key={letter + i} className={`letterButton w-16 h-20 cursor-default bg-[#373547] border-2 border-main-color p-5 rounded-lg`} type='button' >
+            <Button disabled={time === 0} onClick={(e: React.MouseEvent<HTMLButtonElement>) => console.log(e.currentTarget.id)} id={`${letter.toLocaleUpperCase()}-${i + 1}`} key={letter + i} className={`letterButton w-16 h-20 cursor-default bg-[#373547] border-2 border-main-color p-5 rounded-lg`} type='button' >
               <li>{letter.toUpperCase()}</li>
             </Button>
           ))}
         </ul>
         <span style={{ width: `${time}%` }} className={`h-1 bg-main-color rounded-full transition-all duration-1000`}></span>
         <div className='flex flex-col items-center w-full'>
-          {mistake !== '' ? (
+          {mistake !== '' && (
             <>
               <span className='mb-5'>{mistake}</span>
               <div className='flex gap-5'>
-                <Button  className='border border-main-color px-5 py-1 rounded-md' type='button' onClick={() => {
+                <Button className='border border-main-color px-5 py-1 rounded-md' type='button' onClick={() => {
                   const avatar = searchParams?.get('avatar')
                   router.push(`?avatar=${avatar}`)
                   setCloseMinigame(false);
                   handleSavePoints(totalPoints)
                   window.location.reload()
                 }}>Sair</Button>
-                <Button  className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md hover:bg-main-color-hover' type='button' onClick={() => window.location.reload()}>Reiniciar</Button>
+                <Button className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md hover:bg-main-color-hover' type='button' onClick={(e: any) => {
+                  e.preventDefault()
+                  setSelectedLetters(handleShuffleArray())
+                  setTime(100)
+                  setMistake('')
+                  setTotalPoints(0)
+                }}>Reiniciar</Button>
               </div>
             </>
-          ) : ''}
+          )}
+          {/* {time === 0 && (
+            <div>Ops... o tempo acabou!</div>
+          )} */}
         </div>
       </div>
     </motion.div >
