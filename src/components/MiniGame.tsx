@@ -15,6 +15,7 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
   const [indexLetter, setIndexLetter] = useState(0);
   const [mistake, setMistake] = useState('');
   const [totalPoints, setTotalPoints] = useState(0);
+  const [totalPointsArray, setTotalPointsArray] = useState<number[]>([])
 
   let positionLetter = 0
 
@@ -27,6 +28,13 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
     const shuffledArray = arrayLetters.sort(() => Math.random() - 0.5)
     const arraySixLetters = shuffledArray.slice(0, 6)
     return arraySixLetters;
+  }
+
+  const handleSavePoints = (totalPoints: number) => {
+    totalPointsArray.push(totalPoints)
+
+    const arrayOrder = totalPointsArray.sort((a, b) => b - a)
+    localStorage.setItem('totalPoints', JSON.stringify(arrayOrder))
   }
 
   const handleGetKeydown: any = (e: KeyboardEvent) => {
@@ -53,6 +61,12 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
   }
 
   useEffect(() => {
+    const arrayStoragePoints = JSON.parse(localStorage?.getItem('totalPoints')!)
+
+    if (arrayStoragePoints) {
+      setTotalPointsArray(arrayStoragePoints)
+    }
+
     setSelectedLetters(handleShuffleArray())
     const intervalTimeout = setInterval(() => {
       setTime(prevState => Math.max(prevState - 0.5, 0))
@@ -90,10 +104,11 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
               <span className='mb-5'>{mistake}</span>
               <div className='flex gap-5'>
                 <Button  className='border border-main-color px-5 py-1 rounded-md' type='button' onClick={() => {
-                  localStorage.setItem('totalPoints', JSON.stringify(totalPoints))
                   const avatar = searchParams?.get('avatar')
                   router.push(`?avatar=${avatar}`)
                   setCloseMinigame(false);
+                  handleSavePoints(totalPoints)
+                  window.location.reload()
                 }}>Sair</Button>
                 <Button  className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md hover:bg-main-color-hover' type='button' onClick={() => window.location.reload()}>Reiniciar</Button>
               </div>

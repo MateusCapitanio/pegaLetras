@@ -8,7 +8,7 @@ interface propsModalRules {
 
 const ModalRules = ({closeModalRules}: propsModalRules) => {
   return (
-    <div className='flex justify-center items-center absolute bg-black bg-opacity-80 w-screen h-screen'>
+    <div className='flex justify-center items-center absolute bg-black bg-opacity-80 w-screen h-screen z-[1000]'>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

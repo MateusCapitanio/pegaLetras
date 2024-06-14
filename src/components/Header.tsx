@@ -15,7 +15,7 @@ const Header = () => {
   }
 
   return (
-    <header className='fixed w-screen bg-[#0B0B11] bg-opacity-50 border-b border-white border-opacity-15 backdrop-blur-sm'>
+    <header className='fixed w-screen bg-[#0B0B11] bg-opacity-50 border-b border-white border-opacity-15 backdrop-blur-sm z-50'>
       <ul className='flex items-center justify-between py-3 px-10'>
         <li className=''><h1 className='text-3xl font-bold'>Pega Letras</h1></li>
         <Button className='' type='button' onClick={() => setLogoutButton(!logoutButton)}>
