@@ -1,19 +1,25 @@
-import React, { KeyboardEvent, MouseEvent, MouseEventHandler, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'
+import React, { Dispatch, KeyboardEvent, MouseEvent, MouseEventHandler, SetStateAction, useEffect, useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation'
 import Button from './Button';
 import { motion } from 'framer-motion'
 import Link from 'next/link';
 
-const MiniGame = () => {
+interface propsMinigame {
+  setCloseMinigame: Dispatch<SetStateAction<boolean>>
+}
+
+const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
   const [time, setTime] = useState(100);
   const [SelectedLetters, setSelectedLetters] = useState<string[]>([]);
   const [key, setKey] = useState('')
   const [indexLetter, setIndexLetter] = useState(0);
   const [mistake, setMistake] = useState('');
   const [totalPoints, setTotalPoints] = useState(0);
+
   let positionLetter = 0
 
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const arrayLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -29,24 +35,17 @@ const MiniGame = () => {
     if (letter) {
       setTotalPoints(prevState => prevState + 10)
       if (positionLetter === 6) {
-        handleShuffleArray()
+        const letterButton = document.querySelectorAll('.letterButton');
+        letterButton.forEach(element => {
+          element.classList.replace('bg-main-color', 'bg-[#373547]')
+        })
+        positionLetter = 0
+        setSelectedLetters(handleShuffleArray())
       }
     } else {
       setMistake('Ops... Você errou!')
       console.log('ERROU!')
     }
-
-    // if (letter?.id.includes('0')) {
-    //   console.log('PRIMEIRO ELEMENTO');
-    // }
-
-    // if (letter?.id === (`${e.key.toUpperCase()}-${positionLetter}`)) {
-    //   console.log(positionLetter)
-    //   console.log('ACERTOU!');
-    // } else {
-    //   console.log(positionLetter)
-    //   console.log('ERROU!');
-    // }
     if (letter) {
       letter.classList.replace('bg-[#373547]', 'bg-main-color')
     }
@@ -79,7 +78,7 @@ const MiniGame = () => {
         <h1 className='text-4xl font-bold text-center'>Pega-Letras</h1>
         <ul className='grid grid-cols-3 sm:flex  gap-5'>
           {SelectedLetters.map((letter, i) => (
-            <Button onClick={(e: React.MouseEvent<HTMLButtonElement>) => console.log(e.currentTarget.id)} id={`${letter.toLocaleUpperCase()}-${i + 1}`} key={letter + i} className={`w-16 h-20 cursor-default bg-[#373547] border-2 border-main-color p-5 rounded-lg`} type='button' >
+            <Button onClick={(e: React.MouseEvent<HTMLButtonElement>) => console.log(e.currentTarget.id)} id={`${letter.toLocaleUpperCase()}-${i + 1}`} key={letter + i} className={`letterButton w-16 h-20 cursor-default bg-[#373547] border-2 border-main-color p-5 rounded-lg`} type='button' >
               <li>{letter.toUpperCase()}</li>
             </Button>
           ))}
@@ -90,10 +89,12 @@ const MiniGame = () => {
             <>
               <span className='mb-5'>{mistake}</span>
               <div className='flex gap-5'>
-                <Link href={'/'} className='border border-main-color px-5 py-1 rounded-md' type='button' onClick={() => {
+                <Button  className='border border-main-color px-5 py-1 rounded-md' type='button' onClick={() => {
                   localStorage.setItem('totalPoints', JSON.stringify(totalPoints))
-                  window.location.reload()
-                }}>Sair</Link>
+                  const avatar = searchParams?.get('avatar')
+                  router.push(`?avatar=${avatar}`)
+                  setCloseMinigame(false);
+                }}>Sair</Button>
                 <Button  className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md hover:bg-main-color-hover' type='button' onClick={() => window.location.reload()}>Reiniciar</Button>
               </div>
             </>

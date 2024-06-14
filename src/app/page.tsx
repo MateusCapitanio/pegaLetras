@@ -20,7 +20,9 @@ export default function Home() {
     }
     setLogged(true)
 
-    if (window.location.pathname === '/') {
+    console.log(window.location.pathname);
+
+    if (window.location.href.includes('avatar') === false) {
       return router.push(`?avatar=${avatar}`);
     }
     return router.push(window.location.href)

@@ -25,6 +25,7 @@ const MainProfile = () => {
     if (miniGameOpen) {
       return setOpenMiniGame(true)
     }
+    return setOpenMiniGame(false)
   }
 
 
@@ -69,7 +70,7 @@ const MainProfile = () => {
         </section> */}
       </section>
       {openAvatars && <Avatars setCloseModal={setOpenAvatars} />}
-      {openMiniGame && <MiniGame />}
+      {openMiniGame && <MiniGame setCloseMinigame={setOpenMiniGame} />}
       {showRules && <ModalRules closeModalRules={setShowRules} />}
     </div>
   );
