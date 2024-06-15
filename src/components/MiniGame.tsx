@@ -11,9 +11,9 @@ interface propsMinigame {
 
 const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
   const [time, setTime] = useState(100);
-  const [SelectedLetters, setSelectedLetters] = useState<string[]>([]);
-  const [key, setKey] = useState('')
+  const [selectedLetters, setSelectedLetters] = useState<string[]>([]);
   const [mistake, setMistake] = useState('');
+  const [timeoutGame, setTimeoutGame] = useState('');
   const [totalPoints, setTotalPoints] = useState(0);
   const [totalPointsArray, setTotalPointsArray] = useState<number[]>([])
 
@@ -47,6 +47,13 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
     keyClicked.play()
   }
 
+  const resetColorLetters = () => {
+    const letterButton = document.querySelectorAll('.letterButton');
+    letterButton.forEach(element => {
+      element.classList.replace('bg-main-color', 'bg-[#373547]')
+    })
+  }
+
   const handleGetKeydown: any = (e: KeyboardEvent) => {
     if (e.key === ' ' || e.key === 'Enter') {
       return
@@ -57,23 +64,19 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
       if (letter) {
         setTotalPoints(prevState => prevState + 10)
         if (positionLetter === 6) {
-          const letterButton = document.querySelectorAll('.letterButton');
-          letterButton.forEach(element => {
-            element.classList.replace('bg-main-color', 'bg-[#373547]')
-          })
           positionLetter = 0
           setSelectedLetters(handleShuffleArray())
         }
       } else {
         positionLetter = 0
         setMistake('Ops... Você errou!')
+        window.removeEventListener('keydown', handleGetKeydown);
         console.log('ERROU!')
       }
       if (letter) {
         letter.classList.replace('bg-[#373547]', 'bg-main-color')
       }
     }
-    setKey(e.key);
   }
 
   useEffect(() => {
@@ -84,19 +87,33 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
     }
 
     setSelectedLetters(handleShuffleArray())
+
+  }, []);
+
+  useEffect(() => {
     const intervalTimeout = setInterval(() => {
       setTime(prevState => Math.max(prevState - 0.5, 0))
     }, 1000)
     if (time <= 0) {
       return () => clearInterval(intervalTimeout)
     }
-
-    window.addEventListener('keydown', handleGetKeydown)
-
-    return () => {
-      window.removeEventListener('keydown', handleGetKeydown);
-    };
   }, []);
+
+  useEffect(() => {
+    resetColorLetters()
+  }, [selectedLetters]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.removeEventListener('keydown', handleGetKeydown);
+    }, 100000);
+  }, [])
+
+  useEffect(() => {
+    if (mistake === '') {
+      return window.addEventListener('keydown', handleGetKeydown);
+    }
+  }, [mistake]);
 
   return (
     <motion.div
@@ -108,7 +125,7 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
       <div className='flex flex-col bg-[#0B0B11] bg-opacity-80 border border-main-color rounded-lg gap-5 py-5 px-10'>
         <h1 className='text-4xl font-bold text-center'>Pega-Letras</h1>
         <ul className='grid grid-cols-3 sm:flex  gap-5'>
-          {SelectedLetters.map((letter, i) => (
+          {selectedLetters.map((letter, i) => (
             <Button disabled={time === 0} onClick={(e: React.MouseEvent<HTMLButtonElement>) => console.log(e.currentTarget.id)} id={`${letter.toLocaleUpperCase()}-${i + 1}`} key={letter + i} className={`letterButton w-16 h-20 cursor-default bg-[#373547] border-2 border-main-color p-5 rounded-lg`} type='button' >
               <li>{letter.toUpperCase()}</li>
             </Button>
@@ -126,7 +143,7 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
                   setCloseMinigame(false);
                   handleSavePoints(totalPoints)
                   window.location.reload()
-                }}>Sair</Button>
+                }}>Finalizar</Button>
                 <Button className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md hover:bg-main-color-hover' type='button' onClick={(e: any) => {
                   e.preventDefault()
                   setSelectedLetters(handleShuffleArray())
@@ -137,9 +154,28 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
               </div>
             </>
           )}
-          {/* {time === 0 && (
-            <div>Ops... o tempo acabou!</div>
-          )} */}
+          {(time === 0 && mistake === '') && (
+            <>
+              <span className='mb-5'>Ops... o tempo acabou!</span>
+              <div className='flex gap-5'>
+                <Button className='border border-main-color px-5 py-1 rounded-md' type='button' onClick={() => {
+                  const avatar = searchParams?.get('avatar')
+                  router.push(`?avatar=${avatar}`)
+                  setCloseMinigame(false);
+                  handleSavePoints(totalPoints)
+                  window.location.reload()
+                }}>Finalizar</Button>
+                <Button className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md hover:bg-main-color-hover' type='button' onClick={(e: any) => {
+                  e.preventDefault()
+                  window.addEventListener('keydown', handleGetKeydown);
+                  setSelectedLetters(handleShuffleArray())
+                  setTime(100)
+                  setMistake('')
+                  setTotalPoints(0)
+                }}>Reiniciar</Button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </motion.div >

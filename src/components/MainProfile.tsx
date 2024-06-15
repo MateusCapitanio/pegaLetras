@@ -60,7 +60,7 @@ const MainProfile = () => {
           </Button>
           <Button onClick={() => setShowRules(true)} type='button' className='text-lg'>Ler as regras do game</Button>
         </aside>
-        <section className='flex flex-col mb-10 sm:mb-0 h-[550px] sm:h-auto overflow-y-auto bg-[#0B0B11] bg-opacity-50 border border-main-color rounded-lg p-5 shadow-lg shadow-main-color/50 min-w-[297px] lg:w-[600px] mt-10 sm:mt-0'>
+        <section className='flex flex-col mb-10 sm:mb-0 max-h-[550px] overflow-y-auto bg-[#0B0B11] bg-opacity-50 border border-main-color rounded-lg p-5 shadow-lg shadow-main-color/50 min-w-[297px] lg:w-[600px] mt-10 sm:mt-0'>
           <h1 className=' lg:text-4xl mb-5 font-bold'>Histórico de pontuação:</h1>
           <div>
             <ol>
