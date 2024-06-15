@@ -13,7 +13,6 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
   const [time, setTime] = useState(100);
   const [selectedLetters, setSelectedLetters] = useState<string[]>([]);
   const [mistake, setMistake] = useState('');
-  const [timeoutGame, setTimeoutGame] = useState('');
   const [totalPoints, setTotalPoints] = useState(0);
   const [totalPointsArray, setTotalPointsArray] = useState<number[]>([])
 
@@ -106,7 +105,7 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
   useEffect(() => {
     setTimeout(() => {
       window.removeEventListener('keydown', handleGetKeydown);
-    }, 100000);
+    }, 99999);
   }, [])
 
   useEffect(() => {
