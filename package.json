@@ -14,12 +14,14 @@
     "@mui/material": "^5.15.20",
     "axios": "^1.7.2",
     "framer-motion": "^11.2.10",
+    "howler": "^2.2.4",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1"
   },
   "devDependencies": {
+    "@types/howler": "^2.2.11",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

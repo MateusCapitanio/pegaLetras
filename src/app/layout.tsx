@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
-const roboto = Roboto({ 
+const roboto = Roboto({
   subsets: ['latin', 'latin-ext'],
   weight: '400',
 });
 
 export const metadata: Metadata = {
-  title: "Pega Letras",
+  title: "Pega-Letras",
   description: "Desenvolvido por Mateus Capitanio",
 };
 

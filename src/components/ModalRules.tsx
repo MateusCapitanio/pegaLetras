@@ -8,7 +8,7 @@ interface propsModalRules {
 
 const ModalRules = ({closeModalRules}: propsModalRules) => {
   return (
-    <div className='flex justify-center items-center absolute bg-black bg-opacity-80 w-screen h-screen z-[1000]'>
+    <div className='fixed flex justify-center items-center bg-black bg-opacity-80 w-screen h-screen z-[1000]'>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -21,7 +21,7 @@ const ModalRules = ({closeModalRules}: propsModalRules) => {
         <h1 className='text-3xl font-bold mb-5'>Como o game funciona:</h1>
         <ul className='flex flex-col gap-5'>
           <li> - Ao iniciar o game, o jogador deve pressionar as teclas que aparecerem para ele na ordem correta;</li>
-          <li> - Caso ele aperte uma tecla errada ou fora de ordem, o jogo termina;</li>
+          <li> - Caso aperte uma tecla errada ou fora de ordem, o jogo termina;</li>
           <li> - Caso o tempo total de 100 segundos se esgote, o jogo termina;</li>
           <li> - Sempre que você finaliza uma sequência dentro do tempo outra é gerada, quanto mais sequências você fizer, mais pontos você ganha, cada acerto vale 10 pontos.</li>
         </ul>

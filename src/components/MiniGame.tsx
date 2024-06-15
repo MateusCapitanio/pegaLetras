@@ -3,6 +3,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import Button from './Button';
 import { motion } from 'framer-motion'
 import Link from 'next/link';
+import { Howl, Howler } from 'howler'
 
 interface propsMinigame {
   setCloseMinigame: Dispatch<SetStateAction<boolean>>
@@ -12,7 +13,6 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
   const [time, setTime] = useState(100);
   const [SelectedLetters, setSelectedLetters] = useState<string[]>([]);
   const [key, setKey] = useState('')
-  const [indexLetter, setIndexLetter] = useState(0);
   const [mistake, setMistake] = useState('');
   const [totalPoints, setTotalPoints] = useState(0);
   const [totalPointsArray, setTotalPointsArray] = useState<number[]>([])
@@ -31,33 +31,47 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
   }
 
   const handleSavePoints = (totalPoints: number) => {
-    totalPointsArray.push(totalPoints)
+    if (totalPoints != 0) {
+      totalPointsArray.push(totalPoints)
+    }
 
     const arrayOrder = totalPointsArray.sort((a, b) => b - a)
     localStorage.setItem('totalPoints', JSON.stringify(arrayOrder))
   }
 
+  const handleClickKey = () => {
+    const keyClicked = new Howl({
+      src: ['/music/keyboardClick.wav'],
+      volume: 1,
+    });
+    keyClicked.play()
+  }
+
   const handleGetKeydown: any = (e: KeyboardEvent) => {
-    positionLetter += 1
-    console.log(positionLetter)
-    const letter = document.getElementById(`${e.key.toUpperCase()}-${positionLetter}`);
-    if (letter) {
-      setTotalPoints(prevState => prevState + 10)
-      if (positionLetter === 6) {
-        const letterButton = document.querySelectorAll('.letterButton');
-        letterButton.forEach(element => {
-          element.classList.replace('bg-main-color', 'bg-[#373547]')
-        })
-        positionLetter = 0
-        setSelectedLetters(handleShuffleArray())
-      }
+    if (e.key === ' ' || e.key === 'Enter') {
+      return
     } else {
-      positionLetter = 0
-      setMistake('Ops... Você errou!')
-      console.log('ERROU!')
-    }
-    if (letter) {
-      letter.classList.replace('bg-[#373547]', 'bg-main-color')
+      positionLetter += 1
+      handleClickKey()
+      const letter = document.getElementById(`${e.key.toUpperCase()}-${positionLetter}`);
+      if (letter) {
+        setTotalPoints(prevState => prevState + 10)
+        if (positionLetter === 6) {
+          const letterButton = document.querySelectorAll('.letterButton');
+          letterButton.forEach(element => {
+            element.classList.replace('bg-main-color', 'bg-[#373547]')
+          })
+          positionLetter = 0
+          setSelectedLetters(handleShuffleArray())
+        }
+      } else {
+        positionLetter = 0
+        setMistake('Ops... Você errou!')
+        console.log('ERROU!')
+      }
+      if (letter) {
+        letter.classList.replace('bg-[#373547]', 'bg-main-color')
+      }
     }
     setKey(e.key);
   }
@@ -78,6 +92,7 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
     }
 
     window.addEventListener('keydown', handleGetKeydown)
+
     return () => {
       window.removeEventListener('keydown', handleGetKeydown);
     };
@@ -89,7 +104,7 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.5 }}
-      className='absolute flex justify-center items-center w-screen h-screen bg-black bg-opacity-50 backdrop-blur-lg'>
+      className='fixed flex justify-center items-center w-screen h-screen bg-black bg-opacity-50 backdrop-blur-lg z-[1000]'>
       <div className='flex flex-col bg-[#0B0B11] bg-opacity-80 border border-main-color rounded-lg gap-5 py-5 px-10'>
         <h1 className='text-4xl font-bold text-center'>Pega-Letras</h1>
         <ul className='grid grid-cols-3 sm:flex  gap-5'>

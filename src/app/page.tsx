@@ -30,6 +30,7 @@ export default function Home() {
 
   useEffect(() => {
     handleRedirect()
+    
   }, []);
 
   return (

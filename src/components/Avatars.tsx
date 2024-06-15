@@ -23,7 +23,7 @@ const Avatars = ({ setCloseModal }: avatarsProps) => {
   }
 
   return (
-    <div className='flex justify-center items-center absolute bg-black w-screen h-screen bg-opacity-50 z-[1000]'>
+    <div className='flex justify-center items-center fixed bg-black w-screen h-screen bg-opacity-50 z-[1000]'>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
