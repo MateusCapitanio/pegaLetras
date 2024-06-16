@@ -1,3 +1,13 @@
+<h1>Olá, seja muito bem-vindo ao Pega-Letras</h1>
+
+### Sobre a aplicação:
+
+  - Este é um MiniGame onde o objeto é você apertar o máximo de teclas na sequência correta. Quanto mais teclas você acertar, mais pontos você acumula.
+  - Cada acerto vale <b>10 pontos</b>, não existe uma pontuação máxima ou um limite de pontuações.
+  - Se você apertar uma tecla errada, fora de ordem ou o tempo limite acabar, o jogo termina.
+  - O tempo limite do Jogo é de <b>100 segundos</b>.
+  - O Jogo é totalmente responsivo, então caso queira jogá-lo no celular, também possível.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
