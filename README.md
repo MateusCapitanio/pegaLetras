@@ -1,6 +1,6 @@
 <h1>Olá, seja muito bem-vindo ao Pega-Letras</h1>
 
-### Sobre a aplicação:
+## Sobre a aplicação:
 
   - Este é um MiniGame onde o objeto é você apertar o máximo de teclas na sequência correta. Quanto mais teclas você acertar, mais pontos você acumula.
   - Cada acerto vale <b>10 pontos</b>, não existe uma pontuação máxima ou um limite de pontuações.
@@ -8,39 +8,20 @@
   - O tempo limite do Jogo é de <b>100 segundos</b>.
   - O Jogo é totalmente responsivo, então caso queira jogá-lo no celular, também possível.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div style='flex'>
+  <img alt='Desktop' src='./public/images/desktop.png' />
+</div>
 
-## Getting Started
+## Tecnologias utilizadas:
+  - <b>Next.js</b> como principal ferramenta de desenvolvimento;
+  - <b>URL State</b> para o gerenciamento de alguns estados;
+  - <b>LocalStorage</b> para armazenamento de dados do usuário, já que está é uma aplicação Front-End e não possui comunicação com um servidor Back-End ou similar. 
 
-First, run the development server:
+## Iniciando a aplicação:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+  - Certifique-se de ter o <b>Node</b> instalado em sua máquina.
+  - Faça o clone da aplicação em sua máquina.
+  - Execute o comando ```npm install```
+  - Após instalar todas as dependências, execute ```npm run dev``` e divirta-se!
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Ah! Caso tenha alguma dúvida no jogo, não hesite em consultar as regras.
