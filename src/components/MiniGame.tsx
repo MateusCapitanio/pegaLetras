@@ -29,6 +29,21 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
     return arraySixLetters;
   }
 
+  const handleRemoveListener = () => {
+    setTimeout(() => {
+      window.removeEventListener('keydown', handleGetKeydown);
+    }, 99000);
+  }
+
+  const handlePlayErrorClick = () => {
+    const backgroundMusic = new Howl({
+      src: ['/music/fail.mp3'],
+      volume: 0.2
+    }) 
+
+    return backgroundMusic.play()
+  }
+
   const handleSavePoints = (totalPoints: number) => {
     if (totalPoints != 0) {
       totalPointsArray.push(totalPoints)
@@ -67,6 +82,7 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
           setSelectedLetters(handleShuffleArray())
         }
       } else {
+        handlePlayErrorClick()
         positionLetter = 0
         setMistake('Ops... Você errou!')
         window.removeEventListener('keydown', handleGetKeydown);
@@ -87,6 +103,8 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
 
     setSelectedLetters(handleShuffleArray())
 
+    return window.addEventListener('keydown', handleGetKeydown);
+
   }, []);
 
   useEffect(() => {
@@ -103,16 +121,8 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
   }, [selectedLetters]);
 
   useEffect(() => {
-    setTimeout(() => {
-      window.removeEventListener('keydown', handleGetKeydown);
-    }, 99999);
+    handleRemoveListener()
   }, [])
-
-  useEffect(() => {
-    if (mistake === '') {
-      return window.addEventListener('keydown', handleGetKeydown);
-    }
-  }, [mistake]);
 
   return (
     <motion.div
@@ -145,6 +155,8 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
                 }}>Finalizar</Button>
                 <Button className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md hover:bg-main-color-hover' type='button' onClick={(e: any) => {
                   e.preventDefault()
+                  handleRemoveListener()
+                  window.addEventListener('keydown', handleGetKeydown);
                   setSelectedLetters(handleShuffleArray())
                   setTime(100)
                   setMistake('')
@@ -166,6 +178,7 @@ const MiniGame = ({ setCloseMinigame }: propsMinigame) => {
                 }}>Finalizar</Button>
                 <Button className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md hover:bg-main-color-hover' type='button' onClick={(e: any) => {
                   e.preventDefault()
+                  handleRemoveListener()
                   window.addEventListener('keydown', handleGetKeydown);
                   setSelectedLetters(handleShuffleArray())
                   setTime(100)
