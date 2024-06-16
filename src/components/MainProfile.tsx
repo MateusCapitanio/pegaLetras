@@ -39,7 +39,7 @@ const MainProfile = () => {
 
   return (
     <div className='flex h-screen justify-center items-center'>
-      <section className='sm:flex gap-5 mt-[600px] sm:mt-24 flex-wrap'>
+      <section className='sm:flex gap-5 mt-[400px] md:mt-28 flex-wrap'>
         <aside className='flex flex-col items-center gap-5  bg-[#0B0B11] bg-opacity-50 border border-main-color rounded-lg p-5 px-10 shadow-lg shadow-main-color/50'>
           <button onClick={() => setOpenAvatars(!openAvatars)}>
             <User iconClassName='bg-black p-2 rounded-full border border-4 border-main-color absolute bottom-2 right-5' className='w-52 bg-black rounded-full border-8 border-main-color' renderPencil size={50} />
