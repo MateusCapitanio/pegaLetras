@@ -6,6 +6,7 @@ import Button from '@/components/Button';
 import Avatars from '@/components/Avatars';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
+import { motion } from 'framer-motion'
 
 const Login = () => {
   const [openAvatars, setOpenAvatars] = useState(false);
@@ -41,14 +42,22 @@ const Login = () => {
             <Input onChange={(e) => {
               const usernameTarget = e.target.value
               setUsername(usernameTarget)
-              if (usernameTarget.length >= 4) {
+              if (usernameTarget.length >= 3) {
                 setDisabledLoginButton(false)
               } else {
                 setDisabledLoginButton(true)
               }
             }} maxLength={15} id='inputUsername' className='max-w-64 bg-transparent border border-main-color border-opacity-40 p-2 outline-none rounded-md ' placeholder='Digite seu nome' type='text' />
           </label>
-          <Button className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md disabled:bg-main-color-disabled disabled:opacity-50 disabled:cursor-not-allowed hover:bg-main-color-hover'       disabled={disabledLoginButton}
+          {(username.length < 3 && username !== '') && (
+            <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.5 }}
+            className='text-lg text-center text-red-600'>Pelo menos 3 caracteres</motion.div>
+          )}
+          <Button className='bg-main-color shadow-lg shadow-main-color/50 px-5 py-1 rounded-md disabled:bg-main-color-disabled disabled:opacity-50 disabled:cursor-not-allowed hover:bg-main-color-hover' disabled={disabledLoginButton}
             type='submit'
             onClick={() => {
               localStorage.setItem('userLogged', JSON.stringify(username));
